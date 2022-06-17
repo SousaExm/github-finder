@@ -19,7 +19,7 @@ export const Repositories = () => {
         </S.WrapperTabPanel>
         <S.WrapperTabPanel>
             <RepositoryItem
-            repositoryName="discover-rocketQ"
+            repositoryName="discover-rocketQ Starreds"
             linkToCode="SousaExm/discover-rocketQ"
             />
         </S.WrapperTabPanel>

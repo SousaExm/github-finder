@@ -1,12 +1,16 @@
+import { useGitHub } from '../../hooks/useGitHub'
 import * as S from './styled'
 
 export const Profile = () => {
+
+    const { user } = useGitHub()
+
     return (
         <S.Wrapper>
-            <S.WrapperImg src="https://avatars.githubusercontent.com/u/94645489?v=4" alt="Avatar do usuário"/>
+            <S.WrapperImg src={user.avatar} alt="Avatar do usuário"/>
             <S.WrapperInfoUser>
                 <div>
-                    <h1>Renato Sousa</h1>
+                    <h1>{user.name}</h1>
                     <S.WrapperUserName>
                         <h3>Username:</h3>
                         <a href="https://github.com/SousaExm" target="_blank" rel="noreferrer">SousaExm</a>
