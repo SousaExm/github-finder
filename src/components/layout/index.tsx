@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import Header from "../header"
 import * as S from './styled'
 
 type LayoutPropsType = {
@@ -8,7 +9,7 @@ type LayoutPropsType = {
 const Layout = ({children}:LayoutPropsType) => {
     return (
         <S.WrapperLayout>
-            <header>Header</header>
+            <Header/>
             {children}
         </S.WrapperLayout>
     )

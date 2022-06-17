@@ -1,15 +1,17 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useCallback, useState } from "react";
+import api from "../services/api";
 
 type GitHubProviderPropsType = {
     children: ReactNode
 }
 
 type GitHubStateType = {
+    loading?: boolean,
     user: {
         login:string | undefined,
         name:string | undefined,
         avatar: string | undefined,
-        publicUrl: string | undefined,
+        htmlUrl: string | undefined,
         blog: string | undefined,
         company: string | undefined,
         location: string | undefined,
@@ -18,21 +20,25 @@ type GitHubStateType = {
         publicGists: number | undefined,
         publicRepos: number | undefined,
     },
-    repositories: [],
-    starred: [],
+    repositories?: [],
+    starred?: [],
 }
 
-type GitHubContextType = GitHubStateType
+type GitHubContextType = {
+    gitHubState:GitHubStateType,
+    getUser: (username:string) => void
+}
 
 export const GitHubContext = createContext({} as GitHubContextType);
 
 const GitHubProvider = ({children}:GitHubProviderPropsType) => {
     const [ gitHubState, setGitHubState ] = useState<GitHubStateType>({
+            loading: false,
             user: {
                 login:undefined,
                 name:undefined,
                 avatar:undefined,
-                publicUrl:undefined,
+                htmlUrl:undefined,
                 blog:undefined,
                 company:undefined,
                 location:undefined,
@@ -46,9 +52,36 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
         }
     )
 
+    const getUser = (username:string) => {
+        api.get('users/' + username)
+            .then( ({ data:{user} }) => {
+                setGitHubState(prevState => ({...prevState, 
+                    user:{
+                        login:user.login,
+                        name:user.name,
+                        avatar:user.avatar_url,
+                        htmlUrl:user.html_url,
+                        blog:user.blog,
+                        company:user.company,
+                        location:user.location,
+                        followers:user.followers,
+                        following:user.fallowing,
+                        publicGists:user.public_gists,
+                        publicRepos:user.public_repos, 
+                    }
+                }))
+            }
+        )
+    }
+
+    const contextValue = {
+        gitHubState,
+        getUser: useCallback((username:string) => {getUser(username)},[])
+    }
+
     return (
         <GitHubContext.Provider
-        value={gitHubState}
+        value={contextValue}
         >
             {children}
         </GitHubContext.Provider>
