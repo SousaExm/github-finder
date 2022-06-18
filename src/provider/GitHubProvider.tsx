@@ -54,20 +54,21 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
 
     const getUser = (username:string) => {
         api.get('users/' + username)
-            .then( ({ data:{user} }) => {
+            .then( ({data}) => {
+                console.log(data)
                 setGitHubState(prevState => ({...prevState, 
-                    user:{
-                        login:user.login,
-                        name:user.name,
-                        avatar:user.avatar_url,
-                        htmlUrl:user.html_url,
-                        blog:user.blog,
-                        company:user.company,
-                        location:user.location,
-                        followers:user.followers,
-                        following:user.fallowing,
-                        publicGists:user.public_gists,
-                        publicRepos:user.public_repos, 
+                     user:{
+                         login:data.login,
+                         name:data.name,
+                         avatar:data.avatar_url,
+                         htmlUrl:data.html_url,
+                         blog:data.blog,
+                         company:data.company,
+                         location:data.location,
+                         followers:data.followers,
+                         following:data.following,
+                         publicGists:data.public_gists,
+                         publicRepos:data.public_repos, 
                     }
                 }))
             }

@@ -11,14 +11,10 @@ const Header = () => {
         usernameForSearch && getUser(usernameForSearch)
     }
 
-    const handleInputValue = (event:ChangeEvent<HTMLInputElement>) => {
-        setUsernameForSearch(event.target.value)
-    }
-
     return (
         <S.Wrapper>
             <input  
-            onChange={(e) => handleInputValue(e)}
+            onChange={(e) => setUsernameForSearch(e.target.value)}
             value={usernameForSearch}
             type="text"
             placeholder="Digite um nome para pesquisa"
