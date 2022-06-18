@@ -1,20 +1,25 @@
 import { Header } from "../../components/header";
+import { NoSearch } from "../../components/no-search";
 import { Profile } from "../../components/profile";
 import { Repositories } from "../../components/repositories";
 import { useGitHub } from "../../hooks/useGitHub";
 
 export const SearchUsersPage = () => {
-    const {gitHubState:{loading}} = useGitHub()
+    const {searchStatus:{loading , notFound, firstSearch}} = useGitHub()
     
     return (
         <>
             <Header/>
-            {!loading? (
+            {firstSearch === true || notFound ? (
+               <NoSearch/> 
+            ) : loading? (
+                <div>Loading</div>
+            ) : (
                 <>
-                    <Profile/>
-                    <Repositories/>
+                <Profile/>
+                <Repositories/>
                 </>
-            ) : ("LOADING")}
+            )}
         </>
     )
 }
