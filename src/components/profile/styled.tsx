@@ -1,62 +1,79 @@
 import styled from 'styled-components'
+import {StyledIconBase} from '@styled-icons/styled-icon'
+import { Dot } from '@styled-icons/bootstrap/Dot'
+
+export const DotIcon = styled(Dot)`
+    height: 30px;
+` 
+
+export const IconWrapper = styled.div`
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+
+  margin: 8px 0;
+
+  ${StyledIconBase} {
+    color:#c9d1d9;
+    background-color: transparent;
+    width: 19px;
+    height: 19px;
+    padding-bottom: 3px;
+  }
+
+  a:hover {
+    text-decoration:underline;
+  }
+`
+
+/* 
+@styled-icons/boxicons-logos/Github
+@styled-icons/feather/Users
+@styled-icons/fluentui-system-filled/Location
+@styled-icons/bootstrap/Building
+@styled-icons/boxicons-logos/Blogger
+*/
 
 export const Wrapper = styled.div`
     display: flex;
     align-items: flex-start;
+    padding: 32px 15%;
+    background-color:#0d1117;
 `
 
 export const WrapperImg = styled.img`
     border-radius: 50%;
+    border: 2px solid #30363d;
     width: 200px;
-    margin: 8px;
+    margin-right: 32px;
 `
 
-export const WrapperInfoUser = styled.div`
+export const WrapperAllInfoUser = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: center;
     height: 200px;
-    margin-left: 8px;
+    color:#c9d1d9;
 
     h1 {
-        font-size: 32px;
-        font-weight: bold;
-    }
-    
-    h3 {
+        font-weight: 500;
         font-size: 18px;
-        font-weight: bold;
     }
-    
-    h4 {
-        font-size: 16px;
-        font-weight: bold;
+    p {
+        font-weight: 100;
     }
-`
 
-export const WrapperUserName = styled.div`
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-    h3{
-        margin-right: 8px;
-    }
-    a {
-        color: blue;
-        font-weight: bold;
-        font-size: 18px;
-    }
 `
 
 export const WrapperStatusCount = styled.div`
     display: flex;
     align-items: center;
-    div {
-        margin: 8px;
-        text-align: center;
-    }
-`
 
+    span {
+        font-weight: normal;
+    }
+    
+`
 
 

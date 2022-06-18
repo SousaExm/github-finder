@@ -1,4 +1,4 @@
-import Layout from "./components/layout";
+import Header from "./components/header";
 import { Profile } from "./components/profile";
 import { Repositories } from "./components/repositories";
 import { ResetCSS } from "./global/resetCSS";
@@ -9,10 +9,9 @@ const App = () => {
     <main>
       <ResetCSS/>
       <GitHubProvider>
-        <Layout>
-          <Profile/>
-          <Repositories/>
-        </Layout>
+        <Header/>
+        <Profile/>
+        <Repositories/>
       </GitHubProvider>
     </main>
   );

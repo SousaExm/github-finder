@@ -55,7 +55,6 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
     const getUser = (username:string) => {
         api.get('users/' + username)
             .then( ({data}) => {
-                console.log(data)
                 setGitHubState(prevState => ({...prevState, 
                      user:{
                          login:data.login,

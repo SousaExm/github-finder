@@ -1,5 +1,9 @@
 import { useGitHub } from '../../hooks/useGitHub'
 import * as S from './styled'
+import { Github } from '@styled-icons/boxicons-logos/Github'
+import { Location } from '@styled-icons/fluentui-system-filled/Location'
+import { Building } from '@styled-icons/bootstrap/Building'
+import { Blogger } from '@styled-icons/boxicons-logos/Blogger'
 
 export const Profile = () => {
 
@@ -8,34 +12,37 @@ export const Profile = () => {
     return (
         <S.Wrapper>
             <S.WrapperImg src={user.avatar} alt="Avatar do usuário"/>
-            <S.WrapperInfoUser>
+            <S.WrapperAllInfoUser>
                 <div>
                     <h1>{user.name}</h1>
-                    <S.WrapperUserName>
-                        <h3>Username:</h3>
-                        <a href={user.htmlUrl} target="_blank" rel="noreferrer">{user.login}</a>
-                    </S.WrapperUserName>
+                    <p>{user.login}</p>
+                    
+                    {user.company !== null && (
+                        <S.IconWrapper><Building/> {user.company}</S.IconWrapper>        
+                    )}
+                    {user.location !== null && (
+                        <S.IconWrapper><Location/> {user.location}</S.IconWrapper>
+                    )}
+                    {user.blog !== "" && (
+                        <S.IconWrapper><Blogger/> <a href={user.blog} target="_blanck" rel="noreferrer">Clique aqui e conheça o Blog do {user.name}!</a></S.IconWrapper>
+                    )}
+
+                    <S.IconWrapper><Github/> <a href={user.htmlUrl} target="_blanck" rel="noreferrer">Clique aqui para ver o perfil no GitHub!</a></S.IconWrapper>
+
                 </div>
                 
                 <S.WrapperStatusCount>
-                    <div>
-                        <h4>Followers</h4>
-                        <span>{user.followers}</span>
-                    </div>
-                    <div>
-                        <h4>Following</h4>
-                        <span>{user.following}</span>
-                    </div>
-                    <div>
-                        <h4>Gists</h4>
-                        <span>{user.publicGists}</span>
-                    </div>
-                    <div>
-                        <h4>Repos</h4>
-                        <span>{user.publicRepos}</span>
-                    </div>
+                   
+                    <p>Followers <span>{user.followers}</span></p>
+                    <S.DotIcon/>
+                    <p>Following <span>{user.following}</span></p>
+                    <S.DotIcon/>
+                    <p>Gists <span>{user.publicGists}</span></p>
+                    <S.DotIcon/>
+                    <p>Repositories <span>{user.publicRepos}</span></p>
+        
                 </S.WrapperStatusCount>
-            </S.WrapperInfoUser>
+            </S.WrapperAllInfoUser>
         </S.Wrapper>
     )
 }

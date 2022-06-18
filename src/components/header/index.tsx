@@ -13,15 +13,18 @@ const Header = () => {
 
     return (
         <S.Wrapper>
-            <input  
-            onChange={(e) => setUsernameForSearch(e.target.value)}
-            value={usernameForSearch}
-            type="text"
-            placeholder="Digite um nome para pesquisa"
-            />
-            <button 
-            onClick={handleOnSubmit}
-            >Buscar</button>
+            <h1>GitHub Finder</h1>
+            <div>
+                <input
+                onChange={(e) => setUsernameForSearch(e.target.value)}
+                value={usernameForSearch}
+                type="text"
+                placeholder="Insira um nome de usuário do GitHub"
+                />
+                <button 
+                onClick={handleOnSubmit}
+                >Buscar</button>
+            </div>
         </S.Wrapper>
     )
 }
