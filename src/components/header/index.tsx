@@ -1,8 +1,8 @@
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import { useGitHub } from '../../hooks/useGitHub'
 import * as S from './styled'
 
-const Header = () => {
+export const Header = () => {
 
     const { getUser } = useGitHub()
     const [usernameForSearch, setUsernameForSearch] = useState<string>() 
@@ -29,4 +29,3 @@ const Header = () => {
     )
 }
 
-export default Header

@@ -4,7 +4,6 @@ export const Wrapper = styled.header`
     display: flex;
     justify-content: space-between;
     align-items:center;
-    
     height: 10vh;
     padding: 16px 15%;
     
@@ -46,7 +45,7 @@ export const Wrapper = styled.header`
             border-radius: 8px;
             
             padding: 0 8px;
-            height: 29px;
+            height: 28px;
         
             &:hover {
                 background-color: #2c5282;
