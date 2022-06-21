@@ -26,13 +26,6 @@ export const IconWrapper = styled.div`
   }
 `
 
-/* 
-@styled-icons/boxicons-logos/Github
-@styled-icons/feather/Users
-@styled-icons/fluentui-system-filled/Location
-@styled-icons/bootstrap/Building
-@styled-icons/boxicons-logos/Blogger
-*/
 
 export const Wrapper = styled.div`
     display: flex;

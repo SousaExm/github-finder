@@ -17,7 +17,6 @@ export const Header = () => {
             <div>
                 <input
                 onChange={(e) => setUsernameForSearch(e.target.value)}
-                value={usernameForSearch}
                 type="text"
                 placeholder="Insira um nome de usuário do GitHub"
                 />

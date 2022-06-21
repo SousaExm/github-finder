@@ -19,20 +19,37 @@ type GitHubStateType = {
         publicGists: number | undefined,
         publicRepos: number | undefined,
     },
-    repositories?: [],
-    starred?: [],
+    repositories: [{
+        id: string | undefined, 
+        name: string | undefined,
+        full_name: string | undefined,
+        owner: {
+            html_url: string | undefined
+        }
+    }],
+    starred: [{
+        id: string | undefined, 
+        name: string | undefined,
+        full_name: string | undefined,
+        owner: {
+            html_url: string | undefined
+        }
+    }]
 }
 
 type SearchStatusType = {
     firstSearch: boolean,
     notFound: boolean,
-    loading: boolean
+    loading: boolean,
+    loadingRepositories:boolean,    
+    loadingStarreds: boolean
 }
 
 type GitHubContextType = {
     searchStatus: SearchStatusType,
     gitHubState:GitHubStateType,
-    getUser: (username:string) => void
+    getUser: (username:string) => void,
+    getStarred: (username:string) => void
 }
 
 const defaultUser = {
@@ -57,26 +74,67 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
     const [ searchStatus, setSearchStatus ] = useState<SearchStatusType>({
             firstSearch: true,
             notFound: false,
-            loading: false
-        }
-    )
+            loading: false,
+            loadingRepositories:false,
+            loadingStarreds: false
+    })
+
     const [ gitHubState, setGitHubState ] = useState<GitHubStateType>({
         user: defaultUser,
-        repositories: [],
-        starred:[]
+        repositories: [{
+            id: undefined, 
+            name: undefined,
+            full_name: undefined,
+            owner: {
+                html_url: undefined
+            }
+        }],
+        starred:[{
+            id: undefined, 
+            name: undefined,
+            full_name: undefined,
+            owner: {
+                html_url: undefined
+            }
+        }]
+    })
+
+    const getRepositories = (username:string) => {
+        setSearchStatus(prevState => ({...prevState, loadingRepositories: true}))
+        api.get('users/'+ username + '/repos')
+        .then(  res => {
+            console.log(res.data)
+            setGitHubState(prevState => ({...prevState,
+                repositories: res.data 
+            }))
+        })
+        .finally(() => {
+            setSearchStatus(prevState => ({...prevState, loadingRepositories: false}))
+        })
     }
-    )
+
+    const getStarred = (username:string) => {
+        setSearchStatus(prevState => ({...prevState, loadingStarred: true}))
+        api.get('users/'+ username + '/starred')
+        .then(  res => {
+            console.log(res.data)
+            setGitHubState(prevState => ({...prevState,
+                starred: res.data 
+            }))
+        })
+        .finally(() => {
+            setSearchStatus(prevState => ({...prevState, loadingLoadingStarred: false}))
+        })
+    }
 
     const getUser = (username:string) => {
-        setSearchStatus(prevState => ({...prevState, loading: true}))
-        
+        setSearchStatus(prevState => ({...prevState, firstSearch: false, loading: true}))
         api.get('users/' + username)
         .catch(res => {
             return res 
         })
         .then((res) => {
             if(res.request.status === 200){
-                console.log("Penetrei")
                 const data = res.data
                 setSearchStatus(prevState => ({...prevState, notFound: false}))
                 setGitHubState(prevState => ({...prevState,
@@ -94,23 +152,24 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
                         publicRepos:data.public_repos, 
                     }
                 }))
+                getRepositories(username)
             }else{
                 setSearchStatus(prevState => ({...prevState, notFound: true}))
                 setGitHubState(prevState => ({...prevState, user: defaultUser}))
-            } 
-        })
-        .finally(() => setSearchStatus(prevState => ({...prevState,
-                firstSearch: false, 
-                loading: false,
             }
-        ))
-        )
+        })
+        .finally(() => {
+            setSearchStatus(prevState => ({...prevState,
+                loading: false,
+            }))
+        })
     }
 
     const contextValue = {
         searchStatus,
         gitHubState,
-        getUser: useCallback((username:string) => {getUser(username)},[])
+        getUser: useCallback((username:string,) => {getUser(username)},[]),
+        getStarred: useCallback((username:string,) => {getStarred(username)},[])
     }
 
     return (

@@ -48,7 +48,7 @@ export const Wrapper = styled.header`
             height: 28px;
         
             &:hover {
-                background-color: #2c5282;
+                background-color: #1672f0;
                 box-shadow: 3px 2px 10px rgba(0, 0, 0, .2); 
             }
         }  
