@@ -20,7 +20,6 @@ export const NoSearch = () => {
                     </>
                 )}
                          
-        </S.Wrapper>  
-        
+        </S.Wrapper>          
     )
 }

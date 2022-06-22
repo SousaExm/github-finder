@@ -41,7 +41,8 @@ export const WrapperTabPanel = styled(TabPanel)`
     display: none;
     &.is-selected{
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
+        align-items:center;
         flex-wrap: wrap;
     }  
 `

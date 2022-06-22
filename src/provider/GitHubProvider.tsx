@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useCallback, useState } from "react";
+import { Repositories } from "../components/repositories";
 import api from "../services/api";
 
 type GitHubProviderPropsType = {
@@ -23,6 +24,9 @@ type GitHubStateType = {
         id: string | undefined, 
         name: string | undefined,
         full_name: string | undefined,
+        created_at: string | undefined,
+        updated_at: string | undefined,
+        language: string | undefined,
         owner: {
             html_url: string | undefined
         }
@@ -31,6 +35,9 @@ type GitHubStateType = {
         id: string | undefined, 
         name: string | undefined,
         full_name: string | undefined,
+        created_at: string | undefined,
+        updated_at: string | undefined,
+        language: string | undefined,
         owner: {
             html_url: string | undefined
         }
@@ -45,11 +52,23 @@ type SearchStatusType = {
     loadingStarreds: boolean
 }
 
+type GitRepositoryType = [{
+        id: string | undefined, 
+        name: string | undefined,
+        full_name: string | undefined,
+        created_at: string | undefined,
+        updated_at: string | undefined,
+        language: string | undefined,
+        owner: {
+            html_url: string | undefined
+        }
+}]
+
 type GitHubContextType = {
     searchStatus: SearchStatusType,
     gitHubState:GitHubStateType,
     getUser: (username:string) => void,
-    getStarred: (username:string) => void
+    getStarred: (username:string) => void,
 }
 
 const defaultUser = {
@@ -85,6 +104,9 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
             id: undefined, 
             name: undefined,
             full_name: undefined,
+            created_at: undefined,
+            updated_at: undefined,
+            language: undefined,
             owner: {
                 html_url: undefined
             }
@@ -93,6 +115,9 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
             id: undefined, 
             name: undefined,
             full_name: undefined,
+            created_at: undefined,
+            updated_at: undefined,
+            language: undefined,
             owner: {
                 html_url: undefined
             }
@@ -101,12 +126,9 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
 
     const getRepositories = (username:string) => {
         setSearchStatus(prevState => ({...prevState, loadingRepositories: true}))
-        api.get('users/'+ username + '/repos')
-        .then(  res => {
-            console.log(res.data)
-            setGitHubState(prevState => ({...prevState,
-                repositories: res.data 
-            }))
+        api.get<GitRepositoryType>('users/'+ username + '/repos')
+        .then(res => {
+            setGitHubState(prevState => ({...prevState, repositories: res.data}))
         })
         .finally(() => {
             setSearchStatus(prevState => ({...prevState, loadingRepositories: false}))
@@ -117,7 +139,6 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
         setSearchStatus(prevState => ({...prevState, loadingStarred: true}))
         api.get('users/'+ username + '/starred')
         .then(  res => {
-            console.log(res.data)
             setGitHubState(prevState => ({...prevState,
                 starred: res.data 
             }))
@@ -169,7 +190,7 @@ const GitHubProvider = ({children}:GitHubProviderPropsType) => {
         searchStatus,
         gitHubState,
         getUser: useCallback((username:string,) => {getUser(username)},[]),
-        getStarred: useCallback((username:string,) => {getStarred(username)},[])
+        getStarred: useCallback((username:string,) => {getStarred(username)},[]),
     }
 
     return (

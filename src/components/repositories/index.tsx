@@ -6,7 +6,7 @@ import * as S from './styled'
 export const Repositories = () => {
     
     const { 
-        gitHubState:{repositories, user, starred}, 
+        gitHubState:{repositories, user, starred},
         searchStatus:{loadingRepositories, loadingStarreds},
         getStarred 
     } = useGitHub()
@@ -31,6 +31,9 @@ export const Repositories = () => {
                 {repositories.map((repo) => (
                     <RepositoryItem
                     id={repo.id? repo.id : ""}
+                    created_at={repo.created_at? repo.created_at : ""}
+                    updated_at={repo.updated_at? repo.updated_at : ""}
+                    language={repo.language? repo.language : ""}
                     repositoryName={repo.name ? repo.name : ""}
                     linkToCode={repo.full_name ? repo.full_name : ""}
                     />
@@ -47,6 +50,9 @@ export const Repositories = () => {
                 {starred.map((repo) => (
                     <RepositoryItem
                     id={repo.id? repo.id : ""}
+                    created_at={repo.created_at? repo.created_at : ""}
+                    updated_at={repo.updated_at? repo.updated_at : ""}
+                    language={repo.language? repo.language : ""}
                     repositoryName={repo.name ? repo.name : ""}
                     linkToCode={repo.full_name ? repo.full_name : ""}
                     />
