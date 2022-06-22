@@ -15,7 +15,7 @@ type RepositoryItemPropsType = {
 const RepositoryItem = ({repositoryName, linkToCode, created_at, updated_at, language}:RepositoryItemPropsType) => {
 
     let createdDate = new Date(Date.parse(created_at))
-    let updatedDate = new Date(Date.parse(created_at))
+    let updatedDate = new Date(Date.parse(updated_at))
     return(
         <S.Wrapper>
             <h2>{repositoryName}</h2>
